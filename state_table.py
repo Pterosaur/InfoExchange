@@ -83,7 +83,10 @@ def __sync_set_request(self_copy, set_request):
     if type(self_copy) != type(set_request) or type(set_request) not in (dict,):
         return copy.deepcopy(set_request)
     elif type(set_request) == dict:
-        self_copy = copy.deepcopy(self_copy)
+        if len(set_request.items()) == 0:
+            self_copy = {}
+        else:
+            self_copy = copy.deepcopy(self_copy)
         for k, v in set_request.items():
             if k in self_copy:
                 self_copy[k] = __sync_set_request(self_copy[k], v)
